@@ -9,3 +9,4 @@ Amount.name = "piece";
 Weight.name = "g";  
 SideLength.name = "mm";  
 Volume.name = "ml";  
+Temperature.name = "℃";
