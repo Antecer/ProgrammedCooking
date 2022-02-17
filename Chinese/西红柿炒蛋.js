@@ -16,7 +16,7 @@ var PeanutOil = { volume: 8 * Egg.count };
 
 // kitchen utensils
 var Container = { name: "Bowl", minVolume: 50 * Egg.count + 100 };
-var Pot = { name: "Wok", minVolume: (50 * Egg.count + 0.8 * Tomato.weight * Tomato.count) * 3, minDiameter = 280 };
+var Pot = { name: "Wok", minVolume: (50 * Egg.count + 0.8 * Tomato.weight * Tomato.count) * 3, minDiameter: 280 };
 var StirFryTool = { name: "Spatula", count: 1 };
 var Workbench = { name: "ChoppingBoard", count: 1 };
 var Knife = { name: "KitchenKnife", count: 1 };
@@ -30,21 +30,22 @@ function sleep(ms) {
 
 // cooking process
 (async () => {
-	Tomato.description = `Washed with water, Then put the tomatoes on ${ChoppingBoard.name} and use ${Knife.name} cut into 10mm³ cubes.`;
+	Tomato.description = `Washed with water, Then put the tomatoes on ${Workbench.name} and use ${Knife.name} cut into 10mm³ cubes.`;
 	Tomato.volume = 0.8 * Tomato.weight * Tomato.count;
 	Container.description = `Put the contents of the ${Egg.name} into the ${Container.name}, Then stir well with ${StirringRod.name}`;
 	Container.contents = [Egg.content];
 	Pot.contents = [PeanutOil];
 	Pot.temperature = 160;
 	Pot.contents.push(Container.contents);	// contents of the egg
-	while (Egg.content.status != "semi-solidified");
-	Pot.property = { tool: StirFryTool, stirFry = true };
-	while (Egg.content.status != "solidified");
+	Pot.contentStatus = "liquid";
+	while (Pot.contentStatus != "semi-solidified") await sleep(1000);
+	Pot.property = { tool: StirFryTool, stirFry: true };
+	while (Pot.contentStatus != "solidified") await sleep(1000);
 	Pot.property.stirFry = false;
 	Pot.contents.concat([Tomato, Salt, Sugar, SoySauce, WhiteVinegar]);
 	Pot.property.stirFry = true;
 	await sleep(1000 * 60 * 3);
-	while (Tomato.status != "molten");
+	while (Tomato.status != "molten") await sleep(1000);
 	Pot.property.stirFry = false;
 	Pot.temperature = 100;
 	Pot.contents.push(MSG);
