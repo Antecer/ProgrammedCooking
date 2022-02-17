@@ -11,7 +11,7 @@ SideLength.name = "mm";
 Volume.name = "ml";  
 Temperature.name = "℃";
 
-### Sample  
+### Sample（[西红柿炒蛋](/Chinese/西红柿炒蛋.js)）:   
 ```js
 // Author: Antecer
 // Description: scrambled eggs with tomatoes
